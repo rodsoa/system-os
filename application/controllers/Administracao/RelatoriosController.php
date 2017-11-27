@@ -26,65 +26,15 @@ class RelatoriosController extends CI_Controller
 
     public function gerarPDF() {
         $items       = $this->input->post('status');
-        $dataInicial = $this->input->post('dataIncial');
-        $dataFinal   = $this->input->post('dataFinal');
+        $dataInicial = $this->input->post('dataIncial') ? new \DateTime( $this->input->post('dataInicial')) : null;
+        $dataFinal   = $this->input->post('dataFinal') ? new \DateTime( $this->input->post('dataFinal')) : null;;
         $os          = null;
 
-        if ( $dataInicial && !$dataFinal ) {
-            $rsm = new ResultSetMapping();
-            $query ="SELECT * FROM ordens_de_servicos WHERE ";
+        $os = $this->doctrine->em->getRepository(OrdemDeServico::class)->findBy(['status' => $items]);
 
-            foreach ($items as $status ){
-                if ( !next($items) ) {
-                    $query .= "status = '$status' ";
-                } else {
-                    $query .= "status = '$status' OR ";
-                }
-            }
-
-            $query .= "AND data_incial >= $dataInicial";
-
-            $os = $this->doctrine->em
-                ->createNativeQuery($query, $rsm)
-                ->getResult();
-        }elseif ( $dataFinal && !$dataInicial ) {
-            $rsm = new ResultSetMapping();
-            $query ="SELECT * FROM ordens_de_servicos WHERE ";
-
-            foreach ($items as $status ){
-                if ( !next($items) ) {
-                    $query .= "status = '$status' ";
-                } else {
-                    $query .= "status = '$status' OR ";
-                }
-            }
-
-            $query .= "AND data_final <= $dataFinal";
-
-            $os = $this->doctrine->em
-                          ->createNativeQuery($query, $rsm)
-                          ->getResult();
-        }elseif ( $dataFinal && $dataInicial ) {
-            $rsm = new ResultSetMapping();
-            $query ="SELECT * FROM ordens_de_servicos WHERE ";
-
-            foreach ($items as $status ){
-                if ( !next($items) ) {
-                    $query .= "status = '$status' ";
-                } else {
-                    $query .= "status = '$status' OR ";
-                }
-            }
-
-            $query .= "AND BETWEEN $dataInicial AND $dataFinal";
-
-            $os = $this->doctrine->em
-                ->createNativeQuery($query, $rsm)
-                ->getResult();
-        } else {
-            $os = $this->doctrine->em->getRepository(OrdemDeServico::class)->findBy(['status' => $items]);
-        }
-
+        $this->mpdf->SetHeader('Relatórios de Ordens de Serviços');
+        $this->mpdf->SetTitle('SYSTEM OS - Relatórios');
+        $this->mpdf->setFooter('{PAGENO}');
         $this->mpdf->writeHTML( $this->twig->render('app/relatorios/pdf/relatorio-os', ['ordens' => $os]) );
         $this->mpdf->Output();
     }

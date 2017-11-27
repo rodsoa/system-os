@@ -201,4 +201,17 @@ class OrdemDeServico {
     public function setAtualizadoEm( $data ) {
         $this->atualizadoEm = $data;
     }
+
+    public function getValorPecas () {
+        $valor = 0;
+        foreach ( $this->getProdutos() as $item) {
+            $valor += ($item->getProduto())->getPrecoVenda() * $item->getQuantidade();
+        }
+
+        return $valor;
+    }
+
+    public function getValorServico() {
+        return $this->getValorTotal() - $this->getValorPecas();
+    }
 }

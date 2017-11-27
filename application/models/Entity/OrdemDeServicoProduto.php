@@ -62,5 +62,4 @@ class OrdemDeServicoProduto
         $this->quantidade = $qtd;
     }
 
-
 }
