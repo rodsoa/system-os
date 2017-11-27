@@ -9,10 +9,28 @@ class OrdensDeServicosController extends CI_Controller
 {
     public function __construct() {
         parent::__construct();
+
         if ( !$this->session->usuario ) {
             redirect('/login');
         }
+
         $this->twig->addGlobal('session', $this->session);
+
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'ssl://smtp.googlemail.com';
+        $config['smtp_port'] = '465';
+        $config['smtp_timeout'] = '30';
+        $config['smtp_user'] = 'infobytemovel@gmail.com';
+        $config['smtp_pass'] = '24802480';
+        $config['charset'] = 'utf-8';
+        // deve ser aspas duplas ""
+        $config['newline'] = "\r\n";
+        $config['mailtype'] = 'html';
+        $config['wordwrap'] = TRUE;
+
+        $this->load->library('email');
+        $this->mpdf = new \Mpdf\Mpdf();
+        $this->email->initialize($config);
 
     }
 
@@ -55,7 +73,7 @@ class OrdensDeServicosController extends CI_Controller
         // Persistindo e salvando dados no banco
         $this->doctrine->em->persist( $os );
         $this->doctrine->em->flush();
-        
+
         $this->session->set_flashdata('msg_sucesso', 'Ordem de serviço cadastrada com sucesso');
         redirect('/ordens-de-servicos');
     }
@@ -105,8 +123,18 @@ class OrdensDeServicosController extends CI_Controller
         // Persistindo e salvando dados no banco
         $this->doctrine->em->persist( $os );
         $this->doctrine->em->flush();
-        
+
+
+        // Enviando email de atualização
         $this->session->set_flashdata('msg_sucesso', 'Ordem de serviço editada com sucesso');
+        redirect('/ordens-de-servicos');
+    }
+
+    public function deletar( $os ) {
+        $os = $this->doctrine->em->getRepository(OrdemDeServico::class)->find( $os );
+        $this->doctrine->em->remove( $os );
+        $this->doctrine->em->flush();
+
         redirect('/ordens-de-servicos');
     }
 }

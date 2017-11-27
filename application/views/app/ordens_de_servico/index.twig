@@ -102,7 +102,7 @@
 
                                         <button class="btn btn-xs btn-danger"
                                                 type="button"
-                                                onclick="deleteproduto({{ os.id }})">
+                                                onclick="deleteos({{ os.id }})">
                                             <i class="fa fa-fw fa-trash"></i>
                                         </button>
                                     </td>
@@ -132,7 +132,7 @@
             'autoWidth'   : true
         });
 
-        function deleteproduto( id ) {
+        function deleteos( id ) {
             var url = "/ordens-de-servicos/" + id;
             if ( confirm('Você tem certeza dessa ação ?') ) {
                 $.ajax({

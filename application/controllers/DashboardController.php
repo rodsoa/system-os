@@ -32,6 +32,29 @@ class DashboardController extends CI_Controller {
 
     public function index()
 	{
-		$this->twig->display('app/dashboard', ['msg' => 'HELLO EVERYONE!']);
+	    $clientes = count( $this->doctrine->em->getRepository('Entity\Cliente')->findAll());
+	    $os       = count( $this->doctrine->em->getRepository('Entity\OrdemDeServico')->findAll());
+	    $ordens   = $this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Orçamento']);
+	    $usuarios = count( $this->doctrine->em->getRepository('Entity\Usuario')->findAll());
+        $produtos = count( $this->doctrine->em->getRepository('Entity\Usuario')->findAll());
+
+        $orcamentos = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Orçamento']));
+        $andamentos = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Em andamento']));
+        $abertos    = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Aberto']));
+        $finalizados = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Finalizado']));
+
+
+		$this->twig->display('app/dashboard', [
+		    "clientes" => $clientes,
+            "os" => $os,
+            "ordens" => $ordens,
+            "usuarios" => $usuarios,
+            "produtos" => $produtos,
+
+            "orcamentos" => $orcamentos,
+            "andamentos" => $andamentos,
+            "abertos"    => $abertos,
+            "finalizados" => $finalizados
+        ]);
 	}
 }
