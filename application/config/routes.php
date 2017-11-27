@@ -133,10 +133,10 @@ $route['produtos/(:num)']['GET']         = 'Estoque/ProdutosController/exibir/$1
 $route['produtos/(:num)']['DELETE']      = 'Estoque/ProdutosController/deletar/$1';
 
 /** EMAILS */
-$route['email']['GET']  = 'Administracao/EnviarEmailsController/criarEmail';
-$route['email']['POST'] = 'Administracao/EnviarEmailsController/enviar';
+$route['email/(:num)/ordem-de-servico']['GET']  = 'Administracao/EnviarEmailsController/criarEmail/$1';
+$route['email/(:num)/ordem-de-servico']['POST'] = 'Administracao/EnviarEmailsController/enviar/$1';
 
 /** RELATORIOS */
 $route['relatorios']['GET']                = 'Administracao/RelatoriosController/index';
 $route['relatorios']['POST']               = 'Administracao/RelatoriosController/gerarPdf';
-$route['relatorios/:num/ordem-de-servico'] = 'Administracao/RelatoriosController/gerarPdfOs/$1';
+$route['relatorios/(:num)/ordem-de-servico']['GET'] = 'Administracao/RelatoriosController/gerarPdfOs/$1';

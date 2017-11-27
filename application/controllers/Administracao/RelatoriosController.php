@@ -38,4 +38,13 @@ class RelatoriosController extends CI_Controller
         $this->mpdf->writeHTML( $this->twig->render('app/relatorios/pdf/relatorio-os', ['ordens' => $os]) );
         $this->mpdf->Output();
     }
+
+    public function gerarPdfOs($id) {
+        $os = $this->doctrine->em->getRepository(OrdemDeServico::class)->find($id);
+        $this->mpdf->SetHeader('Relatórios de Ordens de Serviços');
+        $this->mpdf->SetTitle('SYSTEM OS - Relatórios');
+        $this->mpdf->setFooter('{PAGENO}');
+        $this->mpdf->writeHTML( $this->twig->render('app/relatorios/pdf/os-detalhada', ['os' => $os]) );
+        $this->mpdf->Output();
+    }
 }

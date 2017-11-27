@@ -79,21 +79,20 @@
                                         </div>
 
                                         <div class="btn-group" role="group" aria-label="...">
-                                            <button type="button" class="btn btn-xs btn-info">
+                                            <a type="button" class="btn btn-xs btn-info"
+                                                href="/relatorios/{{ os.id }}/ordem-de-servico">
                                                 <i class="fa fa-fw fa-file"></i>
                                                 pdf
-                                            </button>
-                                            <button type="button"
-                                                    class="btn btn-xs btn-success">
+                                            </a>
+                                            <a type="button"
+                                                    class="btn btn-xs btn-success"
+                                                    href="/email/{{ os.id }}/ordem-de-servico">
                                                 <i class="fa fa-fw fa-send"></i>
                                                 email
-                                            </button>
+                                            </a>
                                         </div>
 
                                         <div class="btn-group" role="group" aria-label="...">
-                                            <button type="button" class="btn btn-xs btn-primary">
-                                                <i class="fa fa-fw fa-eye"></i>
-                                            </button>
                                             <button type="button"
                                                     class="btn btn-xs btn-warning"
                                                     onclick="window.location.href='/ordens-de-servicos/{{ os.id }}/editar'">

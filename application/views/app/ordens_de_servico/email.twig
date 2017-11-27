@@ -1,0 +1,103 @@
+{% extends "layouts/base.twig" %}
+
+{% block content_header %}
+    <h1>
+        Produtos
+        <small>Cadastro de nova ordem de serviço</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Início </a></li>
+        <li><a href="/ordens-de-servicos">Ordens de Serviços</a></li>
+        <li class="active">Email</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    {# Mensagens de feedback para o ordem de serviço #}
+    {% if session.flashdata('msg_erro') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_erro') }}
+
+            <hr />
+
+            <ul>
+                {% for erro in session.flashdata('erros') %}
+                    <li>{{ erro }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Formulário de cadastro de Produtos</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" action="/email/{{ os.id }}/ordem-de-servico" method="POST">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="estoqueMinimo" class="col-sm-2 control-label">Assunto</label>
+
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="estoqueMinimo" name="assunto" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nome" class="col-sm-2 control-label">Destinatário</label>
+
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="nome" name="destinatario" placeholder="" value="{{ os.cliente.nome }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nome" class="col-sm-2 control-label">Email destinatário</label>
+
+                            <div class="col-sm-5">
+                                <input type="email" class="form-control" id="nome" name="email" placeholder="" value="{{ os.cliente.email}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descricao" class="col-sm-2 control-label">Mensagem</label>
+
+                            <div class="col-sm-5">
+                                <textarea class="form-control" id="mensagem" name="mensagem" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="os"> Adicionar resumo da ordem de serviço ?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="col-sm-offset-2">
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    onclick="window.location.href='/produtos'">
+                                <i class="fa fa-fw fa-arrow-left">&nbsp;</i>
+                                Voltar
+                            </button>
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                        </div>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
