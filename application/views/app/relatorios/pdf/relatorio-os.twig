@@ -1,0 +1,37 @@
+<html>
+    <body>
+        <style type="text/css">
+            .tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;border-width:1px;border-style:solid;}
+            .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
+            .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
+            .tg .tg-yw4l{vertical-align:top}
+        </style>
+
+        <table class="tg">
+            <thead>
+                <tr>
+                    <th class="tg-yw4l">ID</th>
+                    <th class="tg-yw4l">Status</th>
+                    <th class="tg-yw4l">Cliente</th>
+                    <th class="tg-yw4l">Técnico Responsável</th>
+                    <th class="tg-yw4l">Criado em</th>
+                    <th class="tg-yw4l">Atualizado</th>
+                    <th class="tg-yw4l">Valor Total</th>
+                </tr>
+                </thead>
+            <tbody>
+                {% for os in ordens %}
+                    <tr>
+                        <td>{{ os.id }}</td>
+                        <td>{{ os.status }}</td>
+                        <td>{{ os.cliente.nome }}</td>
+                        <td>{{ os.tecnico.nome }}</td>
+                        <td>{{ os.criadoEm.format('d/m/Y H:i:s') }}</td>
+                        <td>{{ os.atualizadoEm.format('d/m/Y H:i:s') }}</td>
+                        <td><b>{% if os.valorTotal > 0 %} R$ {{ os.valorTotal }} {% else %} R$ 0.0 {% endif %}</b></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

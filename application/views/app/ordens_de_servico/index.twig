@@ -1,0 +1,149 @@
+{% extends "layouts/base.twig"  %}
+
+{% block content_header %}
+    <h1>
+        Ordens de Serviços
+        <small>Listagem geral</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Início </a></li>
+        <li class="active">Ordens de Serviços</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    {# Mensagens de feedback para o produto #}
+    {% if session.flashdata('msg_sucesso') %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_sucesso') }}
+        </div>
+    {% elseif session.flashdata('msg_erro') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_erro') }}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                    <a role="button" class="btn btn-primary" href="/ordens-de-servicos/adicionar">
+                        <i class="fa fa-fw fa-plus-square">&nbsp;</i>
+                        Adicionar ordem de serviço
+                    </a>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="">
+                    <table id="tabela-ordens-de-servicos" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Status</th>
+                                <th>Cliente</th>
+                                <th>Técnico Responsável</th>
+                                <th>Criado em</th>
+                                <th>Atualizado</th>
+                                <th>Valor Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for os in ordens %}
+                                <tr>
+                                    <td>{{ os.id }}</td>
+                                    <td>{{ os.status }}</td>
+                                    <td>{{ os.cliente.nome }}</td>
+                                    <td>{{ os.tecnico.nome }}</td>
+                                    <td>{{ os.criadoEm.format('d/m/Y H:i:s') }}</td>
+                                    <td>{{ os.atualizadoEm.format('d/m/Y H:i:s') }}</td>
+                                    <td><b>{% if os.valorTotal > 0 %} R$ {{ os.valorTotal }} {% else %} R$ 0.0 {% endif %}</b></td>
+                                    <td class="text-right">
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <a role="button" class="btn btn-xs btn-primary"
+                                                href="/ordens-de-servicos/{{ os.id }}/produtos">
+                                                <i class="fa fa-fw fa-cogs"></i>
+                                                produtos
+                                            </a>
+                                        </div>
+
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <button type="button" class="btn btn-xs btn-info">
+                                                <i class="fa fa-fw fa-file"></i>
+                                                pdf
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-xs btn-success">
+                                                <i class="fa fa-fw fa-send"></i>
+                                                email
+                                            </button>
+                                        </div>
+
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <button type="button" class="btn btn-xs btn-primary">
+                                                <i class="fa fa-fw fa-eye"></i>
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-xs btn-warning"
+                                                    onclick="window.location.href='/ordens-de-servicos/{{ os.id }}/editar'">
+                                                <i class="fa fa-fw fa-edit"></i>
+                                            </button>
+                                        </div>
+
+                                        <button class="btn btn-xs btn-danger"
+                                                type="button"
+                                                onclick="deleteproduto({{ os.id }})">
+                                            <i class="fa fa-fw fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $('#tabela-ordens-de-servicos').DataTable({
+            'language': {
+                'url': '//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json'
+            },
+
+            'paging'      : true,
+            'lengthChange': false,
+            'searching'   : true,
+            'ordering'    : true,
+            'info'        : true,
+            'autoWidth'   : true
+        });
+
+        function deleteproduto( id ) {
+            var url = "/ordens-de-servicos/" + id;
+            if ( confirm('Você tem certeza dessa ação ?') ) {
+                $.ajax({
+                    url: url,
+                    method: 'DELETE',
+                    success: function () {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}

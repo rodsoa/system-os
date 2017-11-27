@@ -1,0 +1,130 @@
+{% extends "layouts/base.twig" %}
+
+{% block content_header %}
+    <h1>
+        Produtos
+        <small>Cadastro de novo usuário</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Início </a></li>
+        <li><a href="/produtos">Produtos</a></li>
+        <li class="active">Adicionar</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    {# Mensagens de feedback para o usuário #}
+    {% if session.flashdata('msg_erro') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_erro') }}
+
+            <hr />
+
+            <ul>
+                {% for erro in session.flashdata('erros') %}
+                    <li>{{ erro }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Formulário de cadastro de Produtos</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" action="/produtos" method="POST">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label for="fornecedor" class="col-sm-2 control-label">Fornecedor</label>
+
+                            <div class="col-sm-5">
+                                <select class="form-control" id="fornecedor" name="fornecedor" required>
+                                    {% for fornecedor in fornecedores %}
+                                        <option value="{{ fornecedor.id }}">{{ fornecedor.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nome" class="col-sm-2 control-label">Nome</label>
+
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="nome" name="nome" placeholder="" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descricao" class="col-sm-2 control-label">Descrição</label>
+
+                            <div class="col-sm-5">
+                                <textarea class="form-control" id="descricao" name="descricao" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="unidade" class="col-sm-2 control-label">Unidade</label>
+
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="unidade" name="unidade" max-length="2" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="precoCompra" class="col-sm-2 control-label">Preço de compra</label>
+
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="precoCompra" name="precoCompra" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="precoVenda" class="col-sm-2 control-label">Preço de Venda</label>
+
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="precoVenda" name="precoVenda" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="estoque" class="col-sm-2 control-label">Estoque</label>
+
+                            <div class="col-sm-2">
+                                <input type="number" class="form-control" id="estoque" name="estoque" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="estoqueMinimo" class="col-sm-2 control-label">Estoque mínimo</label>
+
+                            <div class="col-sm-2">
+                                <input type="number" class="form-control" id="estoqueMinimo" name="estoqueMinimo" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="col-sm-offset-2">
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    onclick="window.location.href='/produtos'">
+                                <i class="fa fa-fw fa-arrow-left">&nbsp;</i>
+                                Voltar
+                            </button>
+                            <button type="submit" class="btn btn-success">Cadastrar</button>
+                        </div>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

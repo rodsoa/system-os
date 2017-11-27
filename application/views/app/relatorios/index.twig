@@ -1,0 +1,103 @@
+{% extends "layouts/base.twig"  %}
+
+{% block content_header %}
+    <h1>
+        Relatórios de Ordens de Serviços
+        <small>Listagem geral</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Início </a></li>
+        <li class="active">Relatórios</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    {# Mensagens de feedback para o produto #}
+    {% if session.flashdata('msg_sucesso') %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_sucesso') }}
+        </div>
+    {% elseif session.flashdata('msg_erro') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_erro') }}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Gerar relatórios de ordens de serviços</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <form class="form-horizontal" action="/relatorios" method="POST">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label for="status" class="col-sm-2 control-label">Status</label>
+
+                            <div class="col-sm-4">
+                                <select class="form-control" id="status" name="status[]" multiple required>
+                                    <option></option>
+                                    <option value="Orçamento">Orçamento</option>
+                                    <option value="Em andamento">Em andamento</option>
+                                    <option value="Aberto">Aberto</option>
+                                    <option value="Finalizado">Finalizado</option>
+                                    <option value="Cancelado">Cancelado</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dataInicial" class="col-sm-2 control-label">Faixa de datas</label>
+
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" id="dataInicial" name="dataInicial">
+                                <span id="helpBlock" class="help-block">Data inicial</span>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <input type="date" class="form-control" id="dataFinal" name="dataFinal">
+                                <span id="helpBlock" class="help-block">Data final</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="produtos"> Adicionar produtos utilizados ?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="col-sm-offset-2">
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    onclick="window.location.href='/relatorios'">
+                                <i class="fa fa-fw fa-arrow-left">&nbsp;</i>
+                                Voltar
+                            </button>
+                            <button type="submit" class="btn btn-success">Gerar relatório</button>
+                        </div>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

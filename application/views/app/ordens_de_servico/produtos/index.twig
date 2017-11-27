@@ -1,0 +1,123 @@
+{% extends "layouts/base.twig"  %}
+
+{% block content_header %}
+    <h1>
+        Produtos
+        <small>Listagem geral de produtos utilizados</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Início </a></li>
+        <li class="active">Produtos</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    {# Mensagens de feedback para o produto #}
+    {% if session.flashdata('msg_sucesso') %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_sucesso') }}
+        </div>
+    {% elseif session.flashdata('msg_erro') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_erro') }}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                    <a role="button" class="btn btn-primary" href="produtos/adicionar">
+                        <i class="fa fa-fw fa-plus-square">&nbsp;</i>
+                        Adicionar produto
+                    </a>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="">
+                    <table id="tabela-produtos" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Fornecedor</th>
+                                <th>Nome</th>
+                                <th>Unidade</th>
+                                <th>Quantidade</th>
+                                <th>Valor Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for produto in produtos %}
+                                <tr>
+                                    <td>{{ produto.produto.fornecedor.nome }}</td>
+                                    <td>{{ produto.produto.nome }}</td>
+                                    <td>{{ produto.produto.unidade }}</td>
+                                    <td>{{ produto.quantidade }}</td>
+                                    <td><b>R$ {{ produto.quantidade * produto.produto.precoVenda }}</b></td>
+                                    <td class="text-right">
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <button type="button" class="btn btn-xs btn-primary">visualizar</button>
+                                            <button type="button"
+                                                    class="btn btn-xs btn-warning"
+                                                    onclick="window.location.href='/produtos/{{ produto.produto.id }}/editar'">
+                                                editar
+                                            </button>
+                                        </div>
+
+                                        <a class="btn btn-xs btn-danger"
+                                                type="button"
+                                                href="deleteOsProduto({{ produto.id }})">
+                                            <i class="fa fa-fw fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $('#tabela-produtos').DataTable({
+            'language': {
+                'url': '//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json'
+            },
+
+            'paging'      : true,
+            'lengthChange': false,
+            'searching'   : true,
+            'ordering'    : true,
+            'info'        : true,
+            'autoWidth'   : true
+        });
+
+        function deleteOsProduto( id ) {
+            var url = "/ordens-de-servicos/" + {{ os.id }} + "/produtos/" + id +"/remover";
+            if ( confirm('Você tem certeza dessa ação ?') ) {
+                $.ajax({
+                    url: url,
+                    method: 'DELETE',
+                    success: function () {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}

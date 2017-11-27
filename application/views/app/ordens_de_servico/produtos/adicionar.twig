@@ -1,0 +1,83 @@
+{% extends "layouts/base.twig" %}
+
+{% block content_header %}
+    <h1>
+        Produtos
+        <small>Inserção de produtos utilizados na ordem de serviço</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Início </a></li>
+        <li><a href="/ordens_de_servicos">Ordens de Serviços</a></li>
+        <li><a href="/ordens_de_servicos{{ os.id }}/produtos">Produtos</a></li>
+        <li class="active">Adicionar Produtos</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    {# Mensagens de feedback para o usuário #}
+    {% if session.flashdata('msg_erro') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_erro') }}
+
+            <hr />
+
+            <ul>
+                {% for erro in session.flashdata('erros') %}
+                    <li>{{ erro }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Formulário de inserção de Produtos</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" action="/ordens-de-servicos/{{ os.id }}/produtos" method="POST">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label for="produto" class="col-sm-2 control-label">Produto</label>
+
+                            <div class="col-sm-5">
+                                <select class="form-control" id="produto" name="produto" required>
+                                    {% for produto in produtos %}
+                                        <option value="{{ produto.id }}">{{ produto.nome }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantidade" class="col-sm-2 control-label">Quantidade</label>
+
+                            <div class="col-sm-2">
+                                <input type="number" class="form-control" id="quantidade" name="quantidade" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="col-sm-offset-2">
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    onclick="window.location.href='/ordens-de-servicos/{{ os.id }}/produtos'">
+                                <i class="fa fa-fw fa-arrow-left">&nbsp;</i>
+                                Voltar
+                            </button>
+                            <button type="submit" class="btn btn-success">Cadastrar</button>
+                        </div>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

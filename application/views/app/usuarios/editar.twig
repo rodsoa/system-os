@@ -1,0 +1,99 @@
+{% extends "layouts/base.twig" %}
+
+{% block content_header %}
+    <h1>
+        Usuários
+        <small>Edição de usuário</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Início </a></li>
+        <li><a href="/usuarios">Usuários</a></li>
+        <li class="active">Editar</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    {# Mensagens de feedback para o usuário #}
+    {% if session.flashdata('msg_erro') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_erro') }}
+
+            <hr />
+
+            <ul>
+                {% for erro in session.flashdata('erros') %}
+                    <li>{{ erro }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Formulário de edição de usuário</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" action="/usuarios/{{ usuario.id }}" method="POST">
+                    <input type="hidden" name="_method" value="PUT">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="cpf" class="col-sm-2 control-label">CPF</label>
+
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF"
+                                       data-mask="000.000.000-00" value="{{ usuario.cpf }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nome" class="col-sm-2 control-label">Nome</label>
+
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" value="{{ usuario.nome }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label">Email</label>
+
+                            <div class="col-sm-5">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ usuario.email }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="senha" class="col-sm-2 control-label">Senha</label>
+
+                            <div class="col-sm-5">
+                                <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirme_senha" class="col-sm-2 control-label">Confirme a senha</label>
+
+                            <div class="col-sm-5">
+                                <input type="password" class="form-control" id="confirme_senha" name="confirme_senha" placeholder="Confirme a senha">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="col-sm-offset-2">
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    onclick="window.location.href='/usuarios'">
+                                <i class="fa fa-fw fa-arrow-left">&nbsp;</i>
+                                Voltar
+                            </button>
+                            <button type="submit" class="btn btn-success">Editar</button>
+                        </div>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "layouts/base.twig"  %}
+
+{% block content_header %}
+    <h1>
+        fornecedores
+        <small>Listagem geral</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Início </a></li>
+        <li class="active">fornecedores</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    {# Mensagens de feedback para o usuário #}
+    {% if session.flashdata('msg_sucesso') %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_sucesso') }}
+        </div>
+    {% elseif session.flashdata('msg_erro') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_erro') }}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                    <a role="button" class="btn btn-primary" href="fornecedores/adicionar">
+                        <i class="fa fa-fw fa-plus-square">&nbsp;</i>
+                        Adicionar fornecedor
+                    </a>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="">
+                    <table id="tabela-fornecedores" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CNPJ</th>
+                                <th>Email</th>
+                                <th>Tel. residencial</th>
+                                <th>Tel. celular</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for fornecedor in fornecedores %}
+                                <tr>
+                                    <td>{{ fornecedor.nome }}</td>
+                                    <td>{{ fornecedor.cnpj }}</td>
+                                    <td>{{ fornecedor.email }}</td>
+                                    <td>{{ fornecedor.telefone }}</td>
+                                    <td>{{ fornecedor.celular }}</td>
+                                    <td class="text-right">
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <button type="button" class="btn btn-xs btn-primary">visualizar</button>
+                                            <button type="button"
+                                                    class="btn btn-xs btn-warning"
+                                                    onclick="window.location.href='/fornecedores/{{ fornecedor.id }}/editar'">
+                                                editar
+                                            </button>
+                                        </div>
+
+                                        <button class="btn btn-xs btn-danger"
+                                                type="button"
+                                                onclick="deleteFornecedor({{ fornecedor.id }})">
+                                            <i class="fa fa-fw fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $('#tabela-fornecedores').DataTable({
+            'language': {
+                'url': '//cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json'
+            },
+
+            'paging'      : true,
+            'lengthChange': false,
+            'searching'   : true,
+            'ordering'    : true,
+            'info'        : true,
+            'autoWidth'   : true
+        });
+
+        function deleteFornecedor( id ) {
+            var url = "/fornecedores/" + id;
+            if ( confirm('Você tem certeza dessa ação ?') ) {
+                $.ajax({
+                    url: url,
+                    method: 'DELETE',
+                    success: function () {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}
