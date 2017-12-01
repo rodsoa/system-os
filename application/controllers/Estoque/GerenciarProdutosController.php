@@ -74,10 +74,6 @@ class GerenciarProdutosController extends CI_Controller
         }
     }
 
-    public function remover( $os, $osProduto ) {
-
-    }
-
     public function deletar( $os, $osProduto ) {
         $os = $this->doctrine->em->getRepository(OrdemDeServico::class)->find( $os);
         $osProduto = $this->doctrine->em->getRepository(OrdemDeServicoProduto::class)->find( $osProduto );
@@ -101,6 +97,6 @@ class GerenciarProdutosController extends CI_Controller
         $this->doctrine->em->flush();
 
         $this->session->set_flashdata('msg_sucesso', 'Produtos removidos com sucesso!');
-        redirect("/ordens-de-servicos/$os/produtos");
+        redirect("/ordens-de-servicos/".$os->getId()."/produtos");
     }
 }
