@@ -66,8 +66,14 @@ class Cliente {
      */
     protected $ordensDeServicos;
 
+    /**
+     * @OneToMany(targetEntity="Avaliacao", mappedBy="cliente")
+     */
+    protected $avaliacoes;
+
     public function __construct() {
         $this->ordensDeServicos = new ArrayCollection();
+        $this->avaliacoes = new ArrayCollection();
     }
 
     /** GETTERS */
@@ -134,6 +140,10 @@ class Cliente {
 
     public function getCriadoEm() {
         return $this->criadoEm;
+    }
+
+    public function getAvaliacoes() {
+        return $this->avaliacoes;
     }
 
     /** SETTERS */

@@ -32,11 +32,12 @@ class DashboardController extends CI_Controller {
 
     public function index()
 	{
-	    $clientes = count( $this->doctrine->em->getRepository('Entity\Cliente')->findAll());
-	    $os       = count( $this->doctrine->em->getRepository('Entity\OrdemDeServico')->findAll());
-	    $ordens   = $this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Aguardando Atendimento']);
-	    $usuarios = count( $this->doctrine->em->getRepository('Entity\Usuario')->findAll());
-        $produtos = count( $this->doctrine->em->getRepository('Entity\Usuario')->findAll());
+	    $clientes   = count( $this->doctrine->em->getRepository('Entity\Cliente')->findAll());
+	    $os         = count( $this->doctrine->em->getRepository('Entity\OrdemDeServico')->findAll());
+	    $ordens     = $this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Aguardando Atendimento']);
+	    $avaliacoes = $this->doctrine->em->getRepository('Entity\Avaliacao')->findAll();
+	    $usuarios   = count( $this->doctrine->em->getRepository('Entity\Usuario')->findAll());
+        $produtos   = count( $this->doctrine->em->getRepository('Entity\Usuario')->findAll());
 
         $aguardandoAtendimento = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Aguardando Atendimento']));
         $orcamentoAprovado     = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Orçamento Aprovado']));
@@ -49,6 +50,7 @@ class DashboardController extends CI_Controller {
 		$this->twig->display('app/dashboard', [
 		    "clientes" => $clientes,
             "os" => $os,
+            "avaliacoes" => $avaliacoes,
             "ordens" => $ordens,
             "usuarios" => $usuarios,
             "produtos" => $produtos,

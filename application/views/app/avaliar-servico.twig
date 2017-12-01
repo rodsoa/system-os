@@ -1,0 +1,84 @@
+{% extends "layouts/base.twig"  %}
+
+{% block content_header %}
+    <h1>
+        Avaliar Serviço #{{ av.id }}
+        <small>Registro de avaliação</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/cliente-dashboard"><i class="fa fa-dashboard"></i> Início </a></li>
+        <li class="active">Avaliação</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    {# Mensagens de feedback para o produto #}
+    {% if session.flashdata('msg_sucesso') %}
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_sucesso') }}
+        </div>
+    {% elseif session.flashdata('msg_erro') %}
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+            {{ session.flashdata('msg_erro') }}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Avaliação de serviço prestado</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <form class="form-horizontal" action="/avaliar-servico/{{ av.id }}" method="POST">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="avaliacao" class="col-sm-2 control-label">Avaliação</label>
+
+                            <div class="col-sm-4">
+                                <select class="form-control" id="avaliacao" name="avaliacao" required>
+                                    <option value="Bom">Bom</option>
+                                    <option value="Muito Bom">Muito Bom</option>
+                                    <option value="Excelente">Excelente</option>
+                                    <option value="Ruim">Ruim</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comentario" class="col-sm-2 control-label">Comentário</label>
+
+                            <div class="col-sm-5">
+                                <textarea class="form-control" id="comentario" name="comentario" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="col-sm-offset-2">
+                            <button type="button"
+                                    class="btn btn-danger"
+                                    onclick="window.location.href='/cliente-dashboard'">
+                                <i class="fa fa-fw fa-arrow-left">&nbsp;</i>
+                                Voltar
+                            </button>
+                            <button type="submit" class="btn btn-success">Avaliar</button>
+                        </div>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

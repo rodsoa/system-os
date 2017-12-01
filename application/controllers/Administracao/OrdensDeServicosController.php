@@ -4,6 +4,7 @@ use Entity\OrdemDeServico;
 use Entity\Produto;
 use Entity\Cliente;
 use Entity\Usuario;
+use Entity\Avaliacao;
 
 class OrdensDeServicosController extends CI_Controller
 {
@@ -50,10 +51,10 @@ class OrdensDeServicosController extends CI_Controller
     public function cadastrar() {
         $os = new OrdemDeServico();
         $tecnico = $this->doctrine->em->getRepository(Usuario::class)->find( $this->session->usuario->getId() );
+        $cliente = $this->doctrine->em->getRepository(Cliente::class)->find( $this->input->post('cliente') );
         
         foreach( $this->input->post() as $campo => $valor ) {
             if ( $campo === 'cliente' ) {
-                $cliente = $this->doctrine->em->getRepository(Cliente::class)->find( $this->input->post('cliente') );
                 $os->setCliente( $cliente );
                 continue;
             }
@@ -74,6 +75,16 @@ class OrdensDeServicosController extends CI_Controller
         
         // Persistindo e salvando dados no banco
         $this->doctrine->em->persist( $os );
+        $this->doctrine->em->flush();
+
+        // Criando avaliação correspondente
+        $avaliacao = new Avaliacao();
+        $avaliacao->setOrdemDeServico( $os );
+        $avaliacao->setCliente( $cliente );
+        $avaliacao->setTecnico( $tecnico );
+
+        // Persistindo e salvando dados no banco
+        $this->doctrine->em->persist( $avaliacao );
         $this->doctrine->em->flush();
 
         $dados['destinatario'] = ($os->getCliente())->getNome();

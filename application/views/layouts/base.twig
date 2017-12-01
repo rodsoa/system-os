@@ -61,7 +61,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                              <span class="hidden-xs">{{ session.usuario.nome }}</span>
+                              <span class="hidden-xs">
+                                  {% if (session.usuario.nome) %}
+                                    {{ session.usuario.nome }}
+                                  {% else %}
+                                    {{ session.cliente.nome }}
+                                  {% endif %}
+                              </span>
                             </a>
                           </li>
                           <!-- Control Sidebar Toggle Button -->
@@ -198,7 +204,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 event.preventDefault();
                 $('#logout').submit();
             });
-            $('select').select2();
         </script>
         <script></script>
         {% block js %}{% endblock %}

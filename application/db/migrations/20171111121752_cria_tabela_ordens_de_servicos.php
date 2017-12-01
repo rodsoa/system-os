@@ -35,17 +35,7 @@ class CriaTabelaOrdensDeServicos extends AbstractMigration
             ->addColumn('laudo_tecnico', 'text', ['null' => true])
             ->addColumn('garantia', 'text', ['null' => true])
             ->addColumn('situacao', 'boolean', ['default' => true, 'null' => true])
-            ->addColumn('status', 'enum', [ 
-                'values' => [
-                    'Aguardando Atendimento',
-                    'Orçamento Aprovado', 
-                    'Orçamento Reprovado', 
-                    'Equipamento em Análise',
-                    'Aguardando Retirada',
-                    'OS Finalizada'
-                ], 
-                'default' => 'Aguardando Atendimento'
-            ])
+            ->addColumn('status', 'string', ['limit' => 150, 'default' => 'Aguardando Atendimento'])
             ->addColumn('valor_total', 'float', ['null' => true])
             ->addColumn('tecnico_id', 'integer', ['null' => true])
             ->addColumn('cliente_id', 'integer', ['null' => true])

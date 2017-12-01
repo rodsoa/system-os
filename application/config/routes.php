@@ -140,3 +140,8 @@ $route['email/(:num)/ordem-de-servico']['POST'] = 'Administracao/EnviarEmailsCon
 $route['relatorios']['GET']                = 'Administracao/RelatoriosController/index';
 $route['relatorios']['POST']               = 'Administracao/RelatoriosController/gerarPdf';
 $route['relatorios/(:num)/ordem-de-servico']['GET'] = 'Administracao/RelatoriosController/gerarPdfOs/$1';
+
+/** DASHBOARD DO CLIENTE */
+$route['cliente-dashboard']['GET'] =  'ClienteDashboardController/index';
+$route['avaliar-servico/(:num)']['GET'] = 'ClienteDashboardController/avaliar/$1';
+$route['avaliar-servico/(:num)']['POST'] = 'ClienteDashboardController/avaliarServico/$1';

@@ -7,49 +7,58 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">Principal</li>
             <!-- Optionally, you can add icons to the links -->
-            <li>
-                <a href="/">
-                    <i class="fa fa-dashboard"></i> 
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="/ordens-de-servicos">
-                    <i class="fa fa-link"></i> 
-                    <span>Ordens de serviços</span>
-                </a>
-            </li>
-            <li>
-                <a href="/clientes">
-                    <i class="fa fa-user"></i> 
-                    <span>Clientes</span>
-                </a>
-            </li>
-            <li>
-                <a href="/usuarios">
-                    <i class="fa fa-lock"></i> 
-                    <span>Usuários</span>
-                </a>
-            </li>
-            <li class="header">Estoque</li>
-            <li>
-                <a href="/produtos">
-                    <i class="fa fa-link"></i> 
-                    <span>Produtos</span>
-                </a>
-            </li>
-            <li>
-                <a href="/fornecedores">
-                    <i class="fa fa-link"></i> 
-                    <span>Fornecedores</span>
-                </a>
-            </li>
-            <li>
-                <a href="/relatorios">
-                    <i class="fa fa-bar-chart"></i> 
-                    <span>Relatórios</span>
-                </a>
-            </li>
+            {% if session.usuario %}
+                <li>
+                    <a href="/">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/ordens-de-servicos">
+                        <i class="fa fa-link"></i>
+                        <span>Ordens de serviços</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/clientes">
+                        <i class="fa fa-user"></i>
+                        <span>Clientes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/usuarios">
+                        <i class="fa fa-lock"></i>
+                        <span>Usuários</span>
+                    </a>
+                </li>
+                <li class="header">Estoque</li>
+                <li>
+                    <a href="/produtos">
+                        <i class="fa fa-link"></i>
+                        <span>Produtos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/fornecedores">
+                        <i class="fa fa-link"></i>
+                        <span>Fornecedores</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/relatorios">
+                        <i class="fa fa-bar-chart"></i>
+                        <span>Relatórios</span>
+                    </a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="/cliente-dashboard">
+                        <i class="fa fa-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            {% endif %}
         </ul>
         <!-- /.sidebar-menu -->
     </section>

@@ -34,6 +34,11 @@ class OrdemDeServico {
      */
     protected $produtos;
 
+    /**
+     * @OneToOne(targetEntity="Avaliacao", mappedBy="ordemDeServico")
+     */
+    protected $avaliacao;
+
     /** @Column(type="text", name="descricao") */
     protected $descricao;
 
@@ -90,6 +95,10 @@ class OrdemDeServico {
 
     public function getProdutos() {
         return $this->produtos;
+    }
+
+    public function getAvaliacao() {
+        return $this->avaliacao;
     }
 
     public function getDescricao() {

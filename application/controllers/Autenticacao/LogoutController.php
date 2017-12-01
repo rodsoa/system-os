@@ -12,6 +12,10 @@ class LogoutController extends CI_Controller
             unset($_SESSION['usuario']);
         }
 
+        if ( $this->session->cliente ) {
+            unset($_SESSION['cliente']);
+        }
+
         redirect('/');
     }
 }
