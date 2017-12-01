@@ -31,24 +31,35 @@ class ClientesController extends CI_Controller {
 
     /** POST /clientes */
     public function cadastrar() {
-        $cliente = new \Entity\Cliente();
 
-        foreach( $this->input->post() as $campo => $valor ) {
-            if ( $campo === 'tipo' ) continue;
+        /** Executando validações dos campos */
+        if ( $this->form_validation->run('clientes') == FALSE ) {
 
-            $setter = 'set' . ucfirst($campo);
-            $cliente->$setter( $valor );
+            $this->session->set_flashdata('msg_erro', 'Campos não passaram pela validação');
+            $this->session->set_flashdata('erros', $this->form_validation->error_array());
+            redirect('/clientes/adicionar');
+
+        } else {
+
+            $cliente = new \Entity\Cliente();
+            
+            foreach( $this->input->post() as $campo => $valor ) {
+                if ( $campo === 'tipo' ) continue;
+    
+                $setter = 'set' . ucfirst($campo);
+                $cliente->$setter( $valor );
+            }
+            
+            // Atribuindo valor para data de adição
+            $cliente->setCriadoEm( new \DateTime('now'));
+            
+            // Persistindo e salvando dados no banco
+            $this->doctrine->em->persist( $cliente );
+            $this->doctrine->em->flush();
+            
+            $this->session->set_flashdata('msg_sucesso', 'Cliente cadastrado com sucesso');
+            redirect('/clientes');
         }
-
-        // Atribuindo valor para data de adição
-        $cliente->setCriadoEm( new \DateTime('now'));
-
-        // Persistindo e salvando dados no banco
-        $this->doctrine->em->persist( $cliente );
-        $this->doctrine->em->flush();
-
-        $this->session->set_flashdata('msg_sucesso', 'Cliente cadastrado com sucesso');
-        redirect('/clientes');
     }
 
     /** GET /clientes/(:num)/editar */

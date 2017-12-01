@@ -64,11 +64,13 @@ class OrdensDeServicosController extends CI_Controller
         }
         
         // Status
-        $os->setStatus('Orçamento');
+        $os->setStatus('Aguardando Atendimento');
 
         // Atribuindo valor para data de adição
         $os->setCriadoEm( new \DateTime('now'));
         $os->setAtualizadoEm( new \DateTime('now'));
+
+        $os->setDataInicial( new \DateTime('now') );
         
         // Persistindo e salvando dados no banco
         $this->doctrine->em->persist( $os );
@@ -107,10 +109,8 @@ class OrdensDeServicosController extends CI_Controller
                 $tecnico = $this->doctrine->em->getRepository(Usuario::class)->find( $this->input->post('tecnico') );
                 $os->setTecnico( $tecnico );
                 continue;
-            } elseif ( ( $campo === 'dataInicial') || ( $campo === 'dataFinal') ) {
-                $setter = 'set' . ucfirst($campo);
-                $os->$setter( \DateTime::createFromFormat('Y-m-d', $valor) );
-                continue;
+            } elseif ( ($campo === 'status') && ($valor === 'OS Finalizada') ) {
+                $os->setDataFinal( new DateTime('now') );
             }
         
             $setter = 'set' . ucfirst($campo);

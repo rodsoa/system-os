@@ -3,9 +3,6 @@
 use Entity\Usuario;
 
 class UsuariosController extends CI_Controller {
-
-    private $formConfigs;
-
     public function __construct() {
         parent::__construct();
 
@@ -14,35 +11,6 @@ class UsuariosController extends CI_Controller {
         }
 
         $this->twig->addGlobal('session', $this->session);
-
-        $this->formConfigs = array(
-            array(
-                'field'=>'nome',
-                'label'=>'Nome',
-                'rules'=>'required|trim|xss_clean|is_unique[usuarios.nome]'
-            ),
-            array(
-                'field'=>'cpf',
-                'label'=>'CPF',
-                'rules'=>'required|trim|xss_clean|is_unique[usuarios.cpf]'
-            ),
-            array(
-                'field'=>'email',
-                'label'=>'Email',
-                'rules'=>'required|trim|valid_email|xss_clean|is_unique[usuarios.email]'
-            ),
-            array(
-                'field'=>'senha',
-                'label'=>'Senha',
-                'rules'=>'required|trim|xss_clean'
-            ),
-            array(
-                'field'=>'confirme_senha',
-                'label'=>'Confirme a senha',
-                'rules'=>'required|trim|matches[senha]|xss_clean'
-            ),
-
-        );
     }
 
     /**
@@ -75,10 +43,7 @@ class UsuariosController extends CI_Controller {
      */
     public function cadastrar() {
 
-        /** Processando validações dos campos */
-        $this->form_validation->set_rules($this->formConfigs);
-
-        if ($this->form_validation->run() == FALSE){
+        if ($this->form_validation->run('usuarios') == FALSE){
 
             $this->session->set_flashdata('msg_erro', 'Campos não passaram pela validação');
             $this->session->set_flashdata('erros', $this->form_validation->error_array());

@@ -26,8 +26,8 @@ class RelatoriosController extends CI_Controller
 
     public function gerarPDF() {
         $items       = $this->input->post('status');
-        $dataInicial = $this->input->post('dataIncial') ? new \DateTime( $this->input->post('dataInicial')) : null;
-        $dataFinal   = $this->input->post('dataFinal') ? new \DateTime( $this->input->post('dataFinal')) : null;;
+        $dataInicial = $this->input->post('dataInicial') ? new \DateTime( $this->input->post('dataInicial')) : null;
+        $dataFinal   = $this->input->post('dataFinal') ? new \DateTime( $this->input->post('dataFinal')) : null;
         $os          = null;
 
         $os = $this->doctrine->em->getRepository(OrdemDeServico::class)->findBy(['status' => $items]);

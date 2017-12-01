@@ -45,11 +45,12 @@
 
                             <div class="col-sm-5">
                                 <select class="form-control" id="status" name="status" >
-                                    <option value="Orçamento" {% if ordem.status == 'Orçamento' %} selected {% endif %}>Orçamento</option>
-                                    <option value="Em andamento" {% if ordem.status == 'Em andamento' %} selected {% endif %}>Em andamento</option>
-                                    <option value="Aberto" {% if ordem.status == 'Aberto' %} selected {% endif %}>Aberto</option>
-                                    <option value="Finalizado" {% if ordem.status == 'Finalizado' %} selected {% endif %}>Finalizado</option>
-                                    <option value="Cancelado" {% if ordem.status == 'Cancelado' %} selected {% endif %}>Cancelado</option>
+                                    <option value="Aguardando Atendimento" {% if ordem.status == 'Aguardando Atendimento' %} selected {% endif %}>Aguardando Atendimento</option>
+                                    <option value="Orçamento Aprovado" {% if ordem.status == 'Orçamento Aprovado' %} selected {% endif %}>Orçamento Aprovado</option>
+                                    <option value="Orçamento Reprovado" {% if ordem.status == 'Orçamento Reprovado' %} selected {% endif %}>Orçamento Reprovado</option>
+                                    <option value="Equipamento em Análise" {% if ordem.status == 'Equipamento em Análise' %} selected {% endif %}>Equipamento em Análise</option>
+                                    <option value="Aguardando Retirada" {% if ordem.status == 'Aguardando Retirada' %} selected {% endif %}>Aguardando Retirada</option>
+                                    <option value="OS Finalizada" {% if ordem.status == 'OS Finalizada' %} selected {% endif %}>OS Finalizada</option>
                                 </select>
                             </div>
                         </div>
@@ -107,22 +108,6 @@
 
                             <div class="col-sm-5">
                                 <textarea class="form-control" id="garantia" name="garantia" placeholder="" >{{ ordem.garantia}}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="dataInicial" class="col-sm-2 control-label">Data de ínicio</label>
-
-                            <div class="col-sm-5">
-                                <input type="date" class="form-control" id="dataInicial" name="dataInicial" placeholder="" value="{{ ordem.dataInicial.format('Y-m-d') }}">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="dataFinal" class="col-sm-2 control-label">Data de final</label>
-
-                            <div class="col-sm-5">
-                                <input type="date" class="form-control" id="dataFinal" name="dataFinal" placeholder="" value="{{ ordem.dataFinal.format('Y-m-d') }}">
                             </div>
                         </div>
                     </div>

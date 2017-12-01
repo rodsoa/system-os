@@ -74,11 +74,11 @@
                                             </button>
                                         </div>
 
-                                        <a class="btn btn-xs btn-danger"
+                                        <button class="btn btn-xs btn-danger"
                                                 type="button"
-                                                href="deleteOsProduto({{ produto.id }})">
+                                                onclick="deleteOsProduto({{ produto.id }})">
                                             <i class="fa fa-fw fa-trash"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             {% endfor %}
