@@ -34,14 +34,16 @@ class DashboardController extends CI_Controller {
 	{
 	    $clientes = count( $this->doctrine->em->getRepository('Entity\Cliente')->findAll());
 	    $os       = count( $this->doctrine->em->getRepository('Entity\OrdemDeServico')->findAll());
-	    $ordens   = $this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Orçamento']);
+	    $ordens   = $this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Aguardando Atendimento']);
 	    $usuarios = count( $this->doctrine->em->getRepository('Entity\Usuario')->findAll());
         $produtos = count( $this->doctrine->em->getRepository('Entity\Usuario')->findAll());
 
-        $orcamentos = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Orçamento']));
-        $andamentos = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Em andamento']));
-        $abertos    = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Aberto']));
-        $finalizados = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Finalizado']));
+        $aguardandoAtendimento = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Aguardando Atendimento']));
+        $orcamentoAprovado     = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Orçamento Aprovado']));
+        $orcamentoReprovado    = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Orçamento Reprovado']));
+		$equipamentoEmAnalise  = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Equipamento em Análise']));
+		$aguardandoRetirada    = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'Aguardando Retirada']));
+		$osFinalizada          = count($this->doctrine->em->getRepository('Entity\OrdemDeServico')->findBy(['status' => 'OS Finalizada']));
 
 
 		$this->twig->display('app/dashboard', [
@@ -51,10 +53,12 @@ class DashboardController extends CI_Controller {
             "usuarios" => $usuarios,
             "produtos" => $produtos,
 
-            "orcamentos" => $orcamentos,
-            "andamentos" => $andamentos,
-            "abertos"    => $abertos,
-            "finalizados" => $finalizados
+            "agdAtendimento" =>$aguardandoAtendimento,
+            "ocmtAprovado"   => $orcamentoAprovado,
+            "ocmtReprovado"  => $orcamentoReprovado,
+			"eqpmtAnalise"   => $equipamentoEmAnalise,
+			"agdRetirada"    => $aguardandoRetirada,
+			"osFinalizada"   => $osFinalizada
         ]);
 	}
 }

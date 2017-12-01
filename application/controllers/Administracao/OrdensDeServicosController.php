@@ -76,8 +76,17 @@ class OrdensDeServicosController extends CI_Controller
         $this->doctrine->em->persist( $os );
         $this->doctrine->em->flush();
 
-        $this->session->set_flashdata('msg_sucesso', 'Ordem de serviço cadastrada com sucesso');
-        redirect('/ordens-de-servicos');
+        $dados['destinatario'] = ($os->getCliente())->getNome();
+        $dados['email'] = ($os->getCliente())->getEmail();
+        $dados['assunto'] = 'RESUMO DE ORDEM DE SERVICO - SYSTEM OS';
+        $dados['mensagem'] = 'Segue em anexo resumo da ordem de serviço criada';
+        if ( $this->enviarEmail( $os, $dados ) ) {
+            $this->session->set_flashdata('msg_sucesso', 'Ordem de serviço cadastrada com sucesso');
+            redirect('/ordens-de-servicos');
+        } else {
+            $this->session->set_flashdata('msg_sucesso', 'Ordem de serviço cadastrada com sucesso, mas ocorreu um erro no envio do email.');
+            redirect('/ordens-de-servicos');
+        }
     }
 
     public function editar( $id ) {
@@ -126,8 +135,17 @@ class OrdensDeServicosController extends CI_Controller
 
 
         // Enviando email de atualização
-        $this->session->set_flashdata('msg_sucesso', 'Ordem de serviço editada com sucesso');
-        redirect('/ordens-de-servicos');
+        $dados['destinatario'] = ($os->getCliente())->getNome();
+        $dados['email'] = ($os->getCliente())->getEmail();
+        $dados['assunto'] = 'RESUMO DE ORDEM DE SERVICO - SYSTEM OS';
+        $dados['mensagem'] = 'Segue em anexo resumo da atualização que houve na ordem de serviço';
+        if ( $this->enviarEmail( $os, $dados ) ) {
+            $this->session->set_flashdata('msg_sucesso', 'Ordem de serviço editada com sucesso');
+            redirect('/ordens-de-servicos');
+        } else {
+            $this->session->set_flashdata('msg_sucesso', 'Ordem de serviço editada com sucesso, mas ocorreu um erro no envio do email.');
+            redirect('/ordens-de-servicos');
+        }
     }
 
     public function deletar( $os ) {
@@ -136,5 +154,41 @@ class OrdensDeServicosController extends CI_Controller
         $this->doctrine->em->flush();
 
         redirect('/ordens-de-servicos');
+    }
+
+
+    private function enviarEmail( $os, $dados ) {
+        $os = $this->doctrine->em->getRepository(OrdemDeServico::class)->find( $os );
+
+        $destinatario = $dados['destinatario'];
+        $email = $dados['email'];
+        $assunto = $dados['assunto'];
+
+        $mensagem = "<h3> InfoSys - Ordem de Serviço </h3>";
+        $mensagem .= "<p> Estimado Sr(a).: <strong> $destinatario </strong></p>";
+        // nl2br: converte new line (enter) para comandos <br>
+        $mensagem .= nl2br($dados['mensagem']);
+
+        $this->email->from('infobytemovel@gmail.com', 'InfoSys');
+        $this->email->to($email);
+
+        $this->email->subject($assunto);
+
+        //$filename = base_url('mkt/fusca.jpg');
+        //$this->email->attach($filename);
+        //$cid = $this->email->attachment_cid($filename);
+        $this->email->message($mensagem);
+
+        $this->mpdf->WriteHtml( $this->twig->render('app/relatorios/pdf/os-detalhada', ['os' => $os]));
+        $this->mpdf->Output(APPPATH.'../pdf/os/os-'. $os->getId() .'.pdf', 'F');
+        // Adicionando arquivo anexo baseado na nomenclara e diretório que foi salvo
+        $this->email->attach( APPPATH.'../pdf/os/os-'. $os->getId() .'.pdf' );
+
+        if ($this->email->send()) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

@@ -89,10 +89,12 @@
 
                             var data = google.visualization.arrayToDataTable([
                                 ['Task', 'Hours per Day'],
-                                ['Orçamento',     {{ orcamentos }}],
-                                ['Em andamento',      {{ andamentos }}],
-                                ['Aberto',  {{ abertos }}],
-                                ['Finalizado', {{ finalizados }}],
+                                ['Aguardando Atendimento', {{ agdAtendimento }}],
+                                ['Orçamento Aprovado', {{ ocmtAprovado }}],
+                                ['Orçamento Reprovado',  {{ ocmtReprovado }}],
+                                ['Equipamento em Análise', {{ eqpmtAnalise }}],
+                                ['Aguardando Retirada', {{ agdRetirada }}],
+                                ['OS Finalizada', {{ osFinalizada }}],
                             ]);
 
                             var options = {
@@ -124,7 +126,7 @@
         <div class="col-lg-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title"> Em espera </h3>
+                    <h3 class="box-title"> Aguardando Atendimento </h3>
                 </div>
                 <div class="box-body">
                     <table id="tabela-ordens-de-servicos" class="table table-hover table-striped">

@@ -26,6 +26,12 @@
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             <h4><i class="icon fa fa-check"></i> Alerta!</h4>
             {{ session.flashdata('msg_erro') }}
+
+            <ul>
+                {% for erro in session.flashdata('erros') %}
+                    <li>{{ erro }}</li>
+                {% endfor %}
+            </ul>
         </div>
     {% endif %}
 

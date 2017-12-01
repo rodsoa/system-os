@@ -529,4 +529,15 @@ class Cliente extends \Entity\Cliente implements \Doctrine\ORM\Proxy\Proxy
         return parent::setCriadoEm($criadoEm);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function validaCPF()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'validaCPF', []);
+
+        return parent::validaCPF();
+    }
+
 }

@@ -33,12 +33,12 @@ $config = [
         [
             'field' => 'nome',
             'label' => 'Nome',
-            'rules' => 'required|unique[clientes.nome]',
+            'rules' => 'required|is_unique[clientes.nome]',
         ],
         [
             'field' => 'documento',
             'label' => 'Documento',
-            'rules' => 'required|unique[clientes.documento]',
+            'rules' => 'required|is_unique[clientes.documento]',
         ],
         [
             'field' => 'telefone',
@@ -53,7 +53,7 @@ $config = [
         [
             'field' => 'email',
             'label' => 'Email',
-            'rules' => 'required|email|unique[clientes.email]',
+            'rules' => 'required|valid_email|is_unique[clientes.email]',
         ],
         [
             'field' => 'cep',
@@ -83,7 +83,61 @@ $config = [
     ],
 
     'fornecedores' => [
-
+        [
+            'field'=>'nome',
+            'label'=>'Nome',
+            'rules'=>'required|trim|xss_clean|is_unique[fornecedores.nome]'
+        ],
+        [
+            'field'=>'cnpj',
+            'label'=>'CNPJ',
+            'rules'=>'required|trim|xss_clean|is_unique[fornecedores.cnpj]'
+        ],
+        [
+            'field'=>'email',
+            'label'=>'Email',
+            'rules'=>'required|trim|valid_email|xss_clean|is_unique[fornecedores.email]'
+        ],
+        [
+            'field' => 'telefone',
+            'label' => 'Telefone',
+            'rules' => 'required',
+        ],
+        [
+            'field' => 'celular',
+            'label' => 'Celular',
+            'rules' => 'required',
+        ],
+        [
+            'field' => 'cep',
+            'label' => 'Cep',
+            'rules' => 'required',
+        ],
+        [
+            'field' => 'endereco',
+            'label' => 'Endereço',
+            'rules' => 'required',
+        ],
+        [
+            'field' => 'bairro',
+            'label' => 'Bairro',
+            'rules' => 'required',
+        ],
+        [
+            'field' => 'numero',
+            'label' => 'Número',
+            'rules' => 'required',
+        ],
+        [
+            'field' => 'cidade',
+            'label' => 'Cidade',
+            'rules' => 'required',
+        ],
+        [
+            'field' => 'estado',
+            'label' => 'Estado',
+            'rules' => 'required',
+        ],
     ],
 
     'produtos' => [
@@ -95,6 +149,6 @@ $config = [
     ],
 
     'os' => [
-
+        
     ]
 ];
