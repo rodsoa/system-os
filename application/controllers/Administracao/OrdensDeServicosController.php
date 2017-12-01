@@ -82,6 +82,7 @@ class OrdensDeServicosController extends CI_Controller
         $avaliacao->setOrdemDeServico( $os );
         $avaliacao->setCliente( $cliente );
         $avaliacao->setTecnico( $tecnico );
+        $avaliacao->setAvaliacao( 'SEM AVALIAÇÃO' );
 
         // Persistindo e salvando dados no banco
         $this->doctrine->em->persist( $avaliacao );
