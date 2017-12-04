@@ -181,7 +181,7 @@ class OrdensDeServicosController extends CI_Controller
         // nl2br: converte new line (enter) para comandos <br>
         $mensagem .= nl2br($dados['mensagem']);
 
-        $this->email->from('infobytemovel@gmail.com', 'InfoSys');
+        $this->email->from('infobytemovel@gmail.com', 'SYSTEMOS');
         $this->email->to($email);
 
         $this->email->subject($assunto);
