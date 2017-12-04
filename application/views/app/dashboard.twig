@@ -46,7 +46,7 @@
                 <div class="inner">
                     <h3>{{ usuarios }}</h3>
 
-                    <p>Usuarios</p>
+                    <p>Usuários</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -98,7 +98,7 @@
                             ]);
 
                             var options = {
-                                title: 'Grafico por Status'
+                                title: 'Ordens de Serviços'
                             };
 
                             var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -143,17 +143,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for os in ordens %}
-                            <tr>
-                                <td>{{ os.id }}</td>
-                                <td>{{ os.status }}</td>
-                                <td>{{ os.cliente.nome }}</td>
-                                <td>{{ os.tecnico.nome }}</td>
-                                <td>{{ os.criadoEm.format('d/m/Y H:i:s') }}</td>
-                                <td>{{ os.atualizadoEm.format('d/m/Y H:i:s') }}</td>
-                                <td><b>{% if os.valorTotal > 0 %} R$ {{ os.valorTotal }} {% else %} R$ 0.0 {% endif %}</b></td>
+
+                        {% if ordens %}
+                            {% for os in ordens %}
+                                <tr>
+                                    <td>{{ os.id }}</td>
+                                    <td>{{ os.status }}</td>
+                                    <td>{{ os.cliente.nome }}</td>
+                                    <td>{{ os.tecnico.nome }}</td>
+                                    <td>{{ os.criadoEm.format('d/m/Y H:i:s') }}</td>
+                                    <td>{{ os.atualizadoEm.format('d/m/Y H:i:s') }}</td>
+                                    <td><b>{% if os.valorTotal > 0 %} R$ {{ os.valorTotal }} {% else %} R$ 0.0 {% endif %}</b></td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr class="text-center">
+                                <td class="bg-warning" colspan="8"> SEM REGISTROS </td>
                             </tr>
-                        {% endfor %}
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>
@@ -171,23 +178,29 @@
                     <table id="tabela-ordens-de-servicos" class="table table-hover table-striped">
                         <thead>
                         <tr>
-                            <th>OS</th>
+                            <th>Ordem de Serviço</th>
                             <th>Cliente</th>
-                            <th>Tecnico</th>
+                            <th>Técnico</th>
                             <th>Avaliação</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for av in avaliacoes %}
-                            {% if av.avaliacao != 'SEM AVALIAÇÃO' %}
-                                <tr {% if av.avaliacao == 'Ruim' %} style="color:red;" {% endif %}>
-                                    <td>{{ av.id }}</td>
-                                    <td>{{ av.cliente.nome }}</td>
-                                    <td>{{ av.tecnico.nome }}</td>
-                                    <td>{{ av.avaliacao }}</td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
+                        {% if avaliacoes %}
+                            {% for av in avaliacoes %}
+                                {% if av.avaliacao != 'SEM AVALIAÇÃO' %}
+                                    <tr {% if av.avaliacao == 'Ruim' %} style="color:red;" {% endif %}>
+                                        <td>{{ av.id }}</td>
+                                        <td>{{ av.cliente.nome }}</td>
+                                        <td>{{ av.tecnico.nome }}</td>
+                                        <td>{{ av.avaliacao }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <tr class="text-center">
+                                <td class="bg-warning" colspan="4"> SEM REGISTROS </td>
+                            </tr>
+                        {% endif %}
                         </tbody>
                     </table>
                 </div>

@@ -29,30 +29,43 @@
     </head>
     <body class="hold-transition login-page">
         <div class="login-box">
+            {# Mensagens de feedback para o usuário #}
+            {% if session.flashdata('msg_sucesso') %}
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+                    {{ session.flashdata('msg_sucesso') }}
+                </div>
+            {% elseif session.flashdata('msg_erro') %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i> Alerta!</h4>
+                    {{ session.flashdata('msg_erro') }}
+                </div>
+            {% endif %}
+
             <div class="login-logo">
-                <a href="/"><b>System</b>OS</a>
+                <a href="/"><b>Pesquisar</b> OS</a>
             </div>
             <!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">Entre com suas credencias para inicar sessão</p>
+                <p class="login-box-msg">Entre com os dados abaixo para a pesquisa</p>
 
-                <form action="/login" method="POST">
+                <form action="/avaliar-servico" method="POST">
                 
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="Email" name="email">
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                        <input type="text" class="form-control" placeholder="ID da ordem de serviço" name="os" required>
                     </div>
 
                     <div class="form-group has-feedback">
-                        <input type="password" class="form-control" placeholder="Senha" name="senha">
+                        <input type="text" class="form-control" placeholder="Senha" name="senha" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
 
                     <div class="row">
                         <!-- /.col -->
                         <div class="col-xs-12">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
-                            <a role="button" class="btn btn-warning btn-block btn-flat" href="/pesquisar-os">Pesquisar OS</a>
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Pesquisar</button>
                         </div>
                         <!-- /.col -->
                     </div>

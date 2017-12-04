@@ -142,6 +142,8 @@ $route['relatorios']['POST']               = 'Administracao/RelatoriosController
 $route['relatorios/(:num)/ordem-de-servico']['GET'] = 'Administracao/RelatoriosController/gerarPdfOs/$1';
 
 /** DASHBOARD DO CLIENTE */
-$route['cliente-dashboard']['GET'] =  'ClienteDashboardController/index';
-$route['avaliar-servico/(:num)']['GET'] = 'ClienteDashboardController/avaliar/$1';
-$route['avaliar-servico/(:num)']['POST'] = 'ClienteDashboardController/avaliarServico/$1';
+$route['pesquisar-os'] =  'AvaliacaoController/index';
+$route['avaliar-servico']['POST'] = 'AvaliacaoController/avaliar';
+$route['avaliar-servico/(:num)/aprovar']['GET'] = 'AvaliacaoController/aprovar/$1';
+$route['avaliar-servico/(:num)/reprovar']['GET'] = 'AvaliacaoController/reprovar/$1';
+$route['avaliar-servico/(:num)']['POST'] = 'AvaliacaoController/avaliarServico/$1';

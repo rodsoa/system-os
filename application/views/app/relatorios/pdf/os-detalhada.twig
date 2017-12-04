@@ -57,7 +57,7 @@
         <li><b>Defeito:</b> {{ os.Defeito }}</li>
         <li><b>Laudo Técnico:</b>{{ os.laudoTecnico }}</li>
         <li><b>Garantia:</b> {{ os.garantia }}</li>
-        <li><b>Situação:</b> {{ os.situação }}</li>
+        <li><b>Situação:</b> {% if os.situacao %} APROVADO {% endif %}</li>
         <li><b>Status:</b> {{ os.status }}</li>
         <li><b>Valor Total:</b> R$  {{ os.valorTotal }}</li>
         <li><b>Data Inicial:</b> {{ os.dataInicial.format('d/m/Y') }}</li>
@@ -71,10 +71,10 @@
         <th colspan="5">Produtos utilizados</th>
     </tr>
     <tr>
-        <th class="tg-yw4l">Fornecedor</th>
         <th class="tg-yw4l">Produto</th>
         <th class="tg-yw4l">Unidade</th>
         <th class="tg-yw4l">Quantidade</th>
+        <th class="tg-yw41">Valor</th>
         <th class="tg-yw4l">Total</th>
     </tr>
     </thead>
@@ -82,10 +82,10 @@
     <tbody>
     {% for produto in os.produtos %}
         <tr>
-            <td>{{ produto.produto.fornecedor.nome }}</td>
             <td>{{ produto.produto.nome }}</td>
             <td>{{ produto.produto.unidade }}</td>
             <td>{{ produto.quantidade }}</td>
+            <td><b>R$ {{ produto.produto.precoVenda }}</b></td>
             <td><b>R$ {{ produto.quantidade * produto.produto.precoVenda }}</b></td>
         </tr>
     {% endfor %}

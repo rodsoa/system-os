@@ -41,19 +41,12 @@
                 <!-- form start -->
                 <form class="form-horizontal" action="/email/{{ os.id }}/ordem-de-servico" method="POST">
                     <div class="box-body">
-                        <div class="form-group">
-                            <label for="estoqueMinimo" class="col-sm-2 control-label">Assunto</label>
-
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="estoqueMinimo" name="assunto" required>
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label for="nome" class="col-sm-2 control-label">Destinatário</label>
 
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="nome" name="destinatario" placeholder="" value="{{ os.cliente.nome }}">
+                                <input type="text" class="form-control" id="nome" name="destinatario" placeholder="" value="{{ os.cliente.nome }}" readonly>
                             </div>
                         </div>
 
@@ -61,7 +54,15 @@
                             <label for="nome" class="col-sm-2 control-label">Email destinatário</label>
 
                             <div class="col-sm-5">
-                                <input type="email" class="form-control" id="nome" name="email" placeholder="" value="{{ os.cliente.email}}">
+                                <input type="email" class="form-control" id="nome" name="email" placeholder="" value="{{ os.cliente.email}}" readonly>
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                            <label for="estoqueMinimo" class="col-sm-2 control-label">Assunto</label>
+
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="estoqueMinimo" name="assunto" required>
                             </div>
                         </div>
 

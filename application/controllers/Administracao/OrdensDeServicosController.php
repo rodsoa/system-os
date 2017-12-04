@@ -176,7 +176,7 @@ class OrdensDeServicosController extends CI_Controller
         $email = $dados['email'];
         $assunto = $dados['assunto'];
 
-        $mensagem = "<h3> InfoSys - Ordem de Serviço </h3>";
+        $mensagem = "<h3> SystemOS - Ordem de Serviço </h3>";
         $mensagem .= "<p> Estimado Sr(a).: <strong> $destinatario </strong></p>";
         // nl2br: converte new line (enter) para comandos <br>
         $mensagem .= nl2br($dados['mensagem']);

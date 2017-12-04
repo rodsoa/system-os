@@ -67,10 +67,10 @@ class GerenciarProdutosController extends CI_Controller
             $this->doctrine->em->flush();
 
             $this->session->set_flashdata('msg_sucesso', 'Produtos adicionados com sucesso!');
-            redirect("/ordens-de-servicos/$id/produtos");
+            redirect("/ordens-de-servicos/$id/editar");
         } else {
             $this->session->set_flashdata('msg_erro', 'Ocorreu algum erro. Tente novamente.');
-            redirect("/ordens-de-servicos/$id/produtos");
+            redirect("/ordens-de-servicos/$id/editar");
         }
     }
 

@@ -177,7 +177,7 @@ class Cliente {
     }
 
     public function setSenha($senha) {
-        $this->senha = md5($senha);
+        $this->senha = $senha;
     }
 
     public function setCep($cep) {
@@ -210,10 +210,5 @@ class Cliente {
 
     public function setCriadoEm($criadoEm) {
         $this->criadoEm = $criadoEm;
-    }
-
-    /** VALIDACAO */
-    public function validaCPF() {
-        
     }
 }

@@ -30,12 +30,12 @@ class OrdemDeServico {
     protected $tecnico;
 
     /** 
-     * @OneToMany(targetEntity="OrdemDeServicoProduto", mappedBy="ordemDeServico")
+     * @OneToMany(targetEntity="OrdemDeServicoProduto", mappedBy="ordemDeServico", cascade={"remove"})
      */
     protected $produtos;
 
     /**
-     * @OneToOne(targetEntity="Avaliacao", mappedBy="ordemDeServico")
+     * @OneToOne(targetEntity="Avaliacao", mappedBy="ordemDeServico", cascade={"remove"})
      */
     protected $avaliacao;
 

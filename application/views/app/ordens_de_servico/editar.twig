@@ -56,46 +56,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="cliente" class="col-sm-2 control-label">Cliente</label>
-
-                            <div class="col-sm-5">
-                                <select class="form-control" id="cliente" name="cliente" >
-                                    {% for cliente in clientes %}
-                                        <option value="{{ cliente.id }}" {% if ordem.cliente.id == cliente.id %} selected {% endif %}>{{ cliente.nome }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="tecnico" class="col-sm-2 control-label">Técnico Responsável</label>
-
-                            <div class="col-sm-5">
-                                <select class="form-control" id="tecnico" name="tecnico" >
-                                    {% for tecnico in tecnicos %}
-                                        <option value="{{ tecnico.id }}" {% if ordem.tecnico.id == tecnico.id %} selected {% endif %}>{{ tecnico.nome }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="descricao" class="col-sm-2 control-label">Descrição do produto</label>
-
-                            <div class="col-sm-5">
-                                <textarea class="form-control" id="descricao" name="descricao" placeholder="">{{ ordem.descricao }}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="defeito" class="col-sm-2 control-label">Defeito apresentado</label>
-
-                            <div class="col-sm-5">
-                                <textarea class="form-control" id="defeito" name="defeito" placeholder="" >{{ ordem.defeito }}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label for="laudoTecnico" class="col-sm-2 control-label">Laudo técnico</label>
 
                             <div class="col-sm-5">
@@ -116,7 +76,7 @@
                         <label for="valorTotal" class="col-sm-2 control-label">Valor Total do Serviço</label>
 
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="valorTotal" name="valorTotal" placeholder="" value="{{ ordem.valorTotal }}">
+                            <input type="text" class="form-control" id="valorTotal" placeholder="" value="{{ ordem.valorTotal }}" readonly>
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -128,6 +88,11 @@
                                 <i class="fa fa-fw fa-arrow-left">&nbsp;</i>
                                 Voltar
                             </button>
+                            <a role="button" class="btn btn-warning"
+                                href="/ordens-de-servicos/{{ ordem.id }}/produtos/adicionar">
+                                <i class="fa fa-fw fa-plus"></i>
+                                Produtos
+                            </a>
                             <button type="submit" class="btn btn-success">Editar</button>
                         </div>
                     </div>

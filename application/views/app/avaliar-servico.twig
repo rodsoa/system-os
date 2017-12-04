@@ -68,10 +68,12 @@
                         <div class="col-sm-offset-2">
                             <button type="button"
                                     class="btn btn-danger"
-                                    onclick="window.location.href='/cliente-dashboard'">
+                                    onclick="window.location.href='/pesquisar-os'">
                                 <i class="fa fa-fw fa-arrow-left">&nbsp;</i>
                                 Voltar
                             </button>
+                            <a role="button" class="btn btn-warning" href="/avaliar-servico/{{ av.ordemDeServico.id }}/reprovar">Reprovar</a>
+                            <a role="button" class="btn btn-primary" href="/avaliar-servico/{{ av.ordemDeServico.id }}/aprovar">Aprovar</a>
                             <button type="submit" class="btn btn-success">Avaliar</button>
                         </div>
                     </div>
