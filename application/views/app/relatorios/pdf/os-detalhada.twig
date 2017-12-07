@@ -57,8 +57,9 @@
         <li><b>Defeito:</b> {{ os.Defeito }}</li>
         <li><b>Laudo Técnico:</b>{{ os.laudoTecnico }}</li>
         <li><b>Garantia:</b> {{ os.garantia }}</li>
-        <li><b>Situação:</b> {% if os.situacao %} APROVADO {% endif %}</li>
-        <li><b>Status:</b> {{ os.status }}</li>
+        <li><b>Situação:</b> {{ os.status }}</li>
+        <li><b>Valor do Serviço:</b> R$  {{ os.valorServico }}</li>
+        <li><b>Valor das Peças:</b> R$  {{ os.valorPecas }}</li>
         <li><b>Valor Total:</b> R$  {{ os.valorTotal }}</li>
         <li><b>Data Inicial:</b> {{ os.dataInicial.format('d/m/Y') }}</li>
         <li><b>Data Final:</b> {{ os.dataFinal.format('d/m/Y') }}</li>

@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Filesystem;
 
+use Symfony\Component\Filesystem\Exception\InvalidArgumentException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
@@ -83,14 +84,14 @@ class Filesystem
     /**
      * Creates a directory recursively.
      *
-     * @param string|array|\Traversable $dirs The directory path
-     * @param int                       $mode The directory mode
+     * @param string|iterable $dirs The directory path
+     * @param int             $mode The directory mode
      *
      * @throws IOException On any directory creation failure
      */
     public function mkdir($dirs, $mode = 0777)
     {
-        foreach ($this->toIterator($dirs) as $dir) {
+        foreach ($this->toIterable($dirs) as $dir) {
             if (is_dir($dir)) {
                 continue;
             }
@@ -111,7 +112,7 @@ class Filesystem
     /**
      * Checks the existence of files or directories.
      *
-     * @param string|array|\Traversable $files A filename, an array of files, or a \Traversable instance to check
+     * @param string|iterable $files A filename, an array of files, or a \Traversable instance to check
      *
      * @return bool true if the file exists, false otherwise
      */
@@ -119,7 +120,7 @@ class Filesystem
     {
         $maxPathLength = PHP_MAXPATHLEN - 2;
 
-        foreach ($this->toIterator($files) as $file) {
+        foreach ($this->toIterable($files) as $file) {
             if (strlen($file) > $maxPathLength) {
                 throw new IOException(sprintf('Could not check if file exist because path length exceeds %d characters.', $maxPathLength), 0, null, $file);
             }
@@ -135,15 +136,15 @@ class Filesystem
     /**
      * Sets access and modification time of file.
      *
-     * @param string|array|\Traversable $files A filename, an array of files, or a \Traversable instance to create
-     * @param int                       $time  The touch time as a Unix timestamp
-     * @param int                       $atime The access time as a Unix timestamp
+     * @param string|iterable $files A filename, an array of files, or a \Traversable instance to create
+     * @param int             $time  The touch time as a Unix timestamp
+     * @param int             $atime The access time as a Unix timestamp
      *
      * @throws IOException When touch fails
      */
     public function touch($files, $time = null, $atime = null)
     {
-        foreach ($this->toIterator($files) as $file) {
+        foreach ($this->toIterable($files) as $file) {
             $touch = $time ? @touch($file, $time, $atime) : @touch($file);
             if (true !== $touch) {
                 throw new IOException(sprintf('Failed to touch "%s".', $file), 0, null, $file);
@@ -154,7 +155,7 @@ class Filesystem
     /**
      * Removes files or directories.
      *
-     * @param string|array|\Traversable $files A filename, an array of files, or a \Traversable instance to remove
+     * @param string|iterable $files A filename, an array of files, or a \Traversable instance to remove
      *
      * @throws IOException When removal fails
      */
@@ -190,16 +191,16 @@ class Filesystem
     /**
      * Change mode for an array of files or directories.
      *
-     * @param string|array|\Traversable $files     A filename, an array of files, or a \Traversable instance to change mode
-     * @param int                       $mode      The new mode (octal)
-     * @param int                       $umask     The mode mask (octal)
-     * @param bool                      $recursive Whether change the mod recursively or not
+     * @param string|iterable $files     A filename, an array of files, or a \Traversable instance to change mode
+     * @param int             $mode      The new mode (octal)
+     * @param int             $umask     The mode mask (octal)
+     * @param bool            $recursive Whether change the mod recursively or not
      *
      * @throws IOException When the change fail
      */
     public function chmod($files, $mode, $umask = 0000, $recursive = false)
     {
-        foreach ($this->toIterator($files) as $file) {
+        foreach ($this->toIterable($files) as $file) {
             if (true !== @chmod($file, $mode & ~$umask)) {
                 throw new IOException(sprintf('Failed to chmod file "%s".', $file), 0, null, $file);
             }
@@ -212,15 +213,15 @@ class Filesystem
     /**
      * Change the owner of an array of files or directories.
      *
-     * @param string|array|\Traversable $files     A filename, an array of files, or a \Traversable instance to change owner
-     * @param string                    $user      The new owner user name
-     * @param bool                      $recursive Whether change the owner recursively or not
+     * @param string|iterable $files     A filename, an array of files, or a \Traversable instance to change owner
+     * @param string          $user      The new owner user name
+     * @param bool            $recursive Whether change the owner recursively or not
      *
      * @throws IOException When the change fail
      */
     public function chown($files, $user, $recursive = false)
     {
-        foreach ($this->toIterator($files) as $file) {
+        foreach ($this->toIterable($files) as $file) {
             if ($recursive && is_dir($file) && !is_link($file)) {
                 $this->chown(new \FilesystemIterator($file), $user, true);
             }
@@ -239,20 +240,20 @@ class Filesystem
     /**
      * Change the group of an array of files or directories.
      *
-     * @param string|array|\Traversable $files     A filename, an array of files, or a \Traversable instance to change group
-     * @param string                    $group     The group name
-     * @param bool                      $recursive Whether change the group recursively or not
+     * @param string|iterable $files     A filename, an array of files, or a \Traversable instance to change group
+     * @param string          $group     The group name
+     * @param bool            $recursive Whether change the group recursively or not
      *
      * @throws IOException When the change fail
      */
     public function chgrp($files, $group, $recursive = false)
     {
-        foreach ($this->toIterator($files) as $file) {
+        foreach ($this->toIterable($files) as $file) {
             if ($recursive && is_dir($file) && !is_link($file)) {
                 $this->chgrp(new \FilesystemIterator($file), $group, true);
             }
             if (is_link($file) && function_exists('lchgrp')) {
-                if (true !== @lchgrp($file, $group) || (defined('HHVM_VERSION') && !posix_getgrnam($group))) {
+                if (true !== @lchgrp($file, $group)) {
                     throw new IOException(sprintf('Failed to chgrp file "%s".', $file), 0, null, $file);
                 }
             } else {
@@ -369,7 +370,7 @@ class Filesystem
             throw new FileNotFoundException(sprintf('Origin file "%s" is not a file', $originFile));
         }
 
-        foreach ($this->toIterator($targetFiles) as $targetFile) {
+        foreach ($this->toIterable($targetFiles) as $targetFile) {
             if (is_file($targetFile)) {
                 if (fileinode($originFile) === fileinode($targetFile)) {
                     continue;
@@ -450,6 +451,14 @@ class Filesystem
      */
     public function makePathRelative($endPath, $startPath)
     {
+        if (!$this->isAbsolutePath($startPath)) {
+            throw new InvalidArgumentException(sprintf('The start path "%s" is not absolute.', $startPath));
+        }
+
+        if (!$this->isAbsolutePath($endPath)) {
+            throw new InvalidArgumentException(sprintf('The end path "%s" is not absolute.', $endPath));
+        }
+
         // Normalize separators on Windows
         if ('\\' === DIRECTORY_SEPARATOR) {
             $endPath = str_replace('\\', '/', $endPath);
@@ -471,11 +480,11 @@ class Filesystem
         $startPathArr = explode('/', trim($startPath, '/'));
         $endPathArr = explode('/', trim($endPath, '/'));
 
-        $normalizePathArray = function ($pathSegments, $absolute) {
+        $normalizePathArray = function ($pathSegments) {
             $result = array();
 
             foreach ($pathSegments as $segment) {
-                if ('..' === $segment && ($absolute || count($result))) {
+                if ('..' === $segment) {
                     array_pop($result);
                 } elseif ('.' !== $segment) {
                     $result[] = $segment;
@@ -485,8 +494,8 @@ class Filesystem
             return $result;
         };
 
-        $startPathArr = $normalizePathArray($startPathArr, static::isAbsolutePath($startPath));
-        $endPathArr = $normalizePathArray($endPathArr, static::isAbsolutePath($endPath));
+        $startPathArr = $normalizePathArray($startPathArr);
+        $endPathArr = $normalizePathArray($endPathArr);
 
         // Find for which directory the common path stops
         $index = 0;
@@ -598,7 +607,7 @@ class Filesystem
     {
         return strspn($file, '/\\', 0, 1)
             || (strlen($file) > 3 && ctype_alpha($file[0])
-                && ':' === substr($file, 1, 1)
+                && ':' === $file[1]
                 && strspn($file, '/\\', 2, 1)
             )
             || null !== parse_url($file, PHP_URL_SCHEME)
@@ -715,28 +724,15 @@ class Filesystem
         }
     }
 
-    /**
-     * @param mixed $files
-     *
-     * @return \Traversable
-     */
-    private function toIterator($files)
+    private function toIterable($files): iterable
     {
-        if (!$files instanceof \Traversable) {
-            $files = new \ArrayObject(is_array($files) ? $files : array($files));
-        }
-
-        return $files;
+        return is_array($files) || $files instanceof \Traversable ? $files : array($files);
     }
 
     /**
      * Gets a 2-tuple of scheme (may be null) and hierarchical part of a filename (e.g. file:///tmp -> array(file, tmp)).
-     *
-     * @param string $filename The filename to be parsed
-     *
-     * @return array The filename scheme and hierarchical part
      */
-    private function getSchemeAndHierarchy($filename)
+    private function getSchemeAndHierarchy(string $filename): array
     {
         $components = explode('://', $filename, 2);
 

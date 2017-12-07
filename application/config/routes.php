@@ -147,3 +147,7 @@ $route['avaliar-servico']['POST'] = 'AvaliacaoController/avaliar';
 $route['avaliar-servico/(:num)/aprovar']['GET'] = 'AvaliacaoController/aprovar/$1';
 $route['avaliar-servico/(:num)/reprovar']['GET'] = 'AvaliacaoController/reprovar/$1';
 $route['avaliar-servico/(:num)']['POST'] = 'AvaliacaoController/avaliarServico/$1';
+
+// Backup
+
+$route['backup']['GET'] = 'DashboardController/backup';

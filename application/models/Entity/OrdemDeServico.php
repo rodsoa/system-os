@@ -60,6 +60,9 @@ class OrdemDeServico {
     /** @Column(type="string", length=15, name="status") */
     protected $status;
 
+    /** @Column(type="float", name="valor_servico") */
+    protected $valorServico;
+
     /** @Column(type="float", name="valor_total") */
     protected $valorTotal;
 
@@ -129,8 +132,12 @@ class OrdemDeServico {
         return $this->status;
     }
 
+    public function getValorServico() {
+        return $this->valorServico;
+    }
+
     public function getValorTotal() {
-        return $this->valorTotal;
+        return $this->getValorPecas() + $this->getValorServico(); 
     }
 
     public function getDataFinal() {
@@ -191,6 +198,11 @@ class OrdemDeServico {
         $this->status = $status;
     }
 
+    public function setValorServico( $valor ) {
+        $valor = $this->moeda( $valor );
+        $this->valorServico = $valor;
+    }
+
     public function setValorTotal( $valor ) {
         $this->valorTotal = $valor;
     }
@@ -220,7 +232,11 @@ class OrdemDeServico {
         return $valor;
     }
 
-    public function getValorServico() {
-        return $this->getValorTotal() - $this->getValorPecas();
+    function moeda($get_valor) {
+        $source = array('.', ',');
+        $replace = array('', '.');
+        $valor = str_replace($source, $replace, $get_valor); //remove os pontos e substitui a virgula pelo ponto
+        return $valor; //retorna o valor formatado para gravar no banco
     }
 }
+

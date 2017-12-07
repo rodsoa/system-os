@@ -80,18 +80,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="precoCompra" class="col-sm-2 control-label">Preço de compra</label>
-
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" id="precoCompra" name="precoCompra" value="{{ produto.precoCompra }}">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label for="precoVenda" class="col-sm-2 control-label">Preço de Venda</label>
 
                             <div class="col-sm-2">
                                 <input type="text" class="form-control" id="precoVenda" name="precoVenda" value="{{ produto.precoVenda }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="precoCompra" class="col-sm-2 control-label">Preço de compra</label>
+
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="precoCompra" name="precoCompra" value="{{ produto.precoCompra }}">
                             </div>
                         </div>
                         
@@ -120,7 +120,7 @@
                                 <i class="fa fa-fw fa-arrow-left">&nbsp;</i>
                                 Voltar
                             </button>
-                            <button type="submit" class="btn btn-success">Cadastrar</button>
+                            <button type="submit" class="btn btn-success">Editar</button>
                         </div>
                     </div>
                     <!-- /.box-footer -->
@@ -133,5 +133,7 @@
 {% block js %}
     <script>
         $('select').select2();
+        $('#precoCompra').mask("#.##0,00", {reverse: true});
+        $('#precoVenda').mask("#.##0,00", {reverse: true});
     </script>
 {% endblock %}

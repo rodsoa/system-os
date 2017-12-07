@@ -73,7 +73,23 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="valorTotal" class="col-sm-2 control-label">Valor Total do Serviço</label>
+                        <label for="valorServico" class="col-sm-2 control-label">Valor do Serviço</label>
+
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="valorServico" placeholder="" name="valorServico" value="{{ ordem.valorServico }}" >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="valorPecas" class="col-sm-2 control-label">Valor das Peças usadas</label>
+
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="valorTotal" placeholder="" value="{{ ordem.valorPecas }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="valorTotal" class="col-sm-2 control-label">Valor Total ( Peças + Serviço)</label>
 
                         <div class="col-sm-5">
                             <input type="text" class="form-control" id="valorTotal" placeholder="" value="{{ ordem.valorTotal }}" readonly>
@@ -106,5 +122,6 @@
 {% block js %}
     <script>
         $('select').select2();
+        $('#valorServico').mask("#.##0,00", {reverse: true});
     </script>
 {% endblock %}

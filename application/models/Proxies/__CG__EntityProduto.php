@@ -386,4 +386,15 @@ class Produto extends \Entity\Produto implements \Doctrine\ORM\Proxy\Proxy
         return parent::setFornecedor($fornecedor);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function moeda($get_valor)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'moeda', [$get_valor]);
+
+        return parent::moeda($get_valor);
+    }
+
 }

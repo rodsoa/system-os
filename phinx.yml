@@ -10,7 +10,7 @@ environments:
         host: localhost
         name: system_os
         user: root
-        pass: ''
+        pass: 'secret'
         port: 3306
         charset: utf8
 
@@ -19,7 +19,7 @@ environments:
         host: localhost
         name: system_os
         user: root
-        pass: ''
+        pass: 'secret'
         port: 3306
         charset: utf8
 
@@ -28,7 +28,7 @@ environments:
         host: localhost
         name: system_os
         user: root
-        pass: ''
+        pass: 'secret'
         port: 3306
         charset: utf8
 

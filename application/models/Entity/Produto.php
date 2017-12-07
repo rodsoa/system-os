@@ -1,5 +1,4 @@
-<?
-
+<?php
 namespace Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -111,10 +110,12 @@ class Produto
     }
 
     public function setPrecoVenda( $precoVenda) {
+        $precoVenda = $this->moeda( $precoVenda );
         $this->precoVenda = $precoVenda;
     }
 
     public function setPrecoCompra( $precoCompra ) {
+        $precoCompra = $this->moeda( $precoCompra );
         $this->precoCompra = $precoCompra;
     }
 
@@ -128,5 +129,12 @@ class Produto
 
     public function setFornecedor( $fornecedor ) {
         $this->fornecedor = $fornecedor;
+    }
+
+    function moeda($get_valor) {
+        $source = array('.', ',');
+        $replace = array('', '.');
+        $valor = str_replace($source, $replace, $get_valor); //remove os pontos e substitui a virgula pelo ponto
+        return $valor; //retorna o valor formatado para gravar no banco
     }
 }
