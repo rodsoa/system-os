@@ -70,9 +70,11 @@ class AvaliacaoController extends CI_Controller {
             if (  ($os->getCliente())->getSenha() == $senha ) {
                 $this->twig->display('app/avaliar-servico', ['av' => $avaliacao]);
             } else {
+                $this->session->set_flashdata('msg_erro', 'Senha de cliente incorreta');
                 redirect('/pesquisar-os');
             }
         } else {
+            $this->session->set_flashdata('msg_erro', 'Não existem registros para os dados passados');
             redirect('/pesquisar-os');
         }
     }

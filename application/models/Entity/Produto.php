@@ -72,8 +72,16 @@ class Produto
         return $this->precoVenda;
     }
 
+    public function getPrecoVendaFormatado() {
+        return number_format($this->precoVenda, 2, ',', '.');
+    }
+
     public function getPrecoCompra() {
         return $this->precoCompra;
+    }
+
+    public function getPrecoCompraFormatado() {
+        return number_format($this->precoCompra, 2, ',', '.');
     }
 
     public function getEstoque() {

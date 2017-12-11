@@ -136,8 +136,21 @@ class OrdemDeServico {
         return $this->valorServico;
     }
 
+    public function getValorPecas () {
+        $valor = 0;
+        foreach ( $this->getProdutos() as $item) {
+            $valor += ($item->getProduto())->getPrecoVenda() * $item->getQuantidade();
+        }
+
+        return $valor;
+    }
+
+    public function getValorPecasFormatado () {
+        return number_format($this->getValorPecas(), 2, ',', '.');
+    }
+    
     public function getValorTotal() {
-        return $this->getValorPecas() + $this->getValorServico(); 
+        return number_format($this->getValorPecas() + $this->getValorServico(), 2, ',', '.'); 
     }
 
     public function getDataFinal() {
@@ -223,15 +236,7 @@ class OrdemDeServico {
         $this->atualizadoEm = $data;
     }
 
-    public function getValorPecas () {
-        $valor = 0;
-        foreach ( $this->getProdutos() as $item) {
-            $valor += ($item->getProduto())->getPrecoVenda() * $item->getQuantidade();
-        }
-
-        return $valor;
-    }
-
+    /** FUNÇÕES HELPERS */
     function moeda($get_valor) {
         $source = array('.', ',');
         $replace = array('', '.');

@@ -235,12 +235,34 @@ class Produto extends \Entity\Produto implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getPrecoVendaFormatado()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPrecoVendaFormatado', []);
+
+        return parent::getPrecoVendaFormatado();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getPrecoCompra()
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPrecoCompra', []);
 
         return parent::getPrecoCompra();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPrecoCompraFormatado()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPrecoCompraFormatado', []);
+
+        return parent::getPrecoCompraFormatado();
     }
 
     /**

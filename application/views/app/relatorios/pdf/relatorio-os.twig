@@ -72,8 +72,8 @@
                         <td>{{ os.tecnico.nome }}</td>
                         <td>{{ os.criadoEm.format('d/m/Y H:i:s') }}</td>
                         <td>{{ os.atualizadoEm.format('d/m/Y H:i:s') }}</td>
-                        <td><b>R$ {{ os.valorPecas }}</b></td>
-                        <td><b>R$ {{ os.valorServico}}</b></td>
+                        <td><b>R$ {{ os.valorPecas|number_format(2, ',', '.') }}</b></td>
+                        <td><b>R$ {{ os.valorServico|number_format(2, ',', '.')}}</b></td>
                         <td><b>{% if os.valorTotal > 0 %} R$ {{ os.valorTotal }} {% else %} R$ 0.0 {% endif %}</b></td>
                     </tr>
                 {% endfor %}

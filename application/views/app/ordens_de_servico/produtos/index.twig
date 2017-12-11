@@ -64,7 +64,7 @@
                                     <td>{{ produto.produto.nome }}</td>
                                     <td>{{ produto.produto.unidade }}</td>
                                     <td>{{ produto.quantidade }}</td>
-                                    <td><b>R$ {{ produto.quantidade * produto.produto.precoVenda }}</b></td>
+                                    <td><b>R$ {{ (produto.quantidade * produto.produto.precoVenda)|number_format(2, ',', '.') }}</b></td>
                                     <td class="text-right">
                                         <div class="btn-group" role="group" aria-label="...">
                                             <button type="button"

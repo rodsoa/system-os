@@ -4,12 +4,12 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6d4ffb0f6de4592944caa5d3d5ecb63e
+class ComposerStaticInit05707c9821cca7c11f5c92da0125e99a
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
     );
 
@@ -669,10 +669,10 @@ class ComposerStaticInit6d4ffb0f6de4592944caa5d3d5ecb63e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6d4ffb0f6de4592944caa5d3d5ecb63e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6d4ffb0f6de4592944caa5d3d5ecb63e::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6d4ffb0f6de4592944caa5d3d5ecb63e::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6d4ffb0f6de4592944caa5d3d5ecb63e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit05707c9821cca7c11f5c92da0125e99a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit05707c9821cca7c11f5c92da0125e99a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit05707c9821cca7c11f5c92da0125e99a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit05707c9821cca7c11f5c92da0125e99a::$classMap;
 
         }, null, ClassLoader::class);
     }

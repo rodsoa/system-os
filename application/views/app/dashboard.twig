@@ -182,6 +182,7 @@
                             <th>Cliente</th>
                             <th>Técnico</th>
                             <th>Avaliação</th>
+                            <th>Comentário</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -193,6 +194,7 @@
                                         <td>{{ av.cliente.nome }}</td>
                                         <td>{{ av.tecnico.nome }}</td>
                                         <td>{{ av.avaliacao }}</td>
+                                        <td>{{ av.comentario }}</td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}

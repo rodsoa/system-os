@@ -132,6 +132,7 @@
 {% block js %}
     <script>
         $('select').select2();
-        $('#valorServico').mask("#.##0,00", {reverse: true});
+        $('#precoVenda').mask("#.##0,00", {reverse: true});
+        $('#precoCompra').mask("#.##0,00", {reverse: true});
     </script>
 {% endblock %}

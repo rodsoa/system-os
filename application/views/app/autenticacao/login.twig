@@ -26,12 +26,28 @@
 
         <!-- Google Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+   
+        <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body class="hold-transition login-page">
         <div class="login-box">
             <div class="login-logo">
                 <a href="/"><b>System</b>OS</a>
             </div>
+
+            {# Mensagens de feedback para o usuário #}
+            {% if session.flashdata('msg_sucesso') %}
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> {{ session.flashdata('msg_erro') }}</h4>
+                </div>
+            {% elseif session.flashdata('msg_erro') %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i>{{ session.flashdata('msg_erro') }}!</h4>
+                </div>
+            {% endif %}
+
             <!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Entre com suas credencias para inicar sessão</p>
@@ -39,18 +55,24 @@
                 <form action="/login" method="POST">
                 
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="Email" name="email">
+                        <input type="email" class="form-control" placeholder="Email" name="email" required>
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
 
                     <div class="form-group has-feedback">
-                        <input type="password" class="form-control" placeholder="Senha" name="senha">
+                        <input type="password" class="form-control" placeholder="Senha" name="senha" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
 
                     <div class="row">
                         <!-- /.col -->
                         <div class="col-xs-12">
+                            <div 
+                                class="g-recaptcha" 
+                                data-sitekey="6LdDhjwUAAAAANZGcfq0YzGx30s_cYPt-oCUj0Bj"
+                                style="margin-bottom: 10px;">
+                            </div>
+                            
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
                             <a role="button" class="btn btn-warning btn-block btn-flat" href="/pesquisar-os">Pesquisar OS</a>
                         </div>
